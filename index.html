@@ -7,22 +7,22 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="manBody">
+    <div id="manBody" :class="container">
         <div id="page-header">
             <div class="page-header-ttl">
                 <div class="page-row"></div>
             </div>
             <div class="page-header-link">
                 <div id="topMenu" class="page-row">
-                    <a href="#area-1">遊戲玩法</a>
-                    <a href="#area-2">7PK公式表</a>
-                    <a href="#area-3">彩金</a>
-                    <a href="#area-4">其他補充說明</a>
-                    <a href="#area-5">遊戲功能</a>
-                    <a href="#area-6">基本功能</a>
-                    <a href="#area-2">7PK公式表</a>
-                    <a href="#area-3">彩金</a>
-                    <a href="#area-4">其他補充說明</a>
+                    <a href="#area-1" @click.prevent="clickMeun('#area-1')">遊戲玩法</a>
+                    <a href="#area-2" @click.prevent="clickMeun('#area-2')">7PK公式表</a>
+                    <a href="#area-3" @click.prevent="clickMeun('#area-3')">彩金</a>
+                    <a href="#area-4" @click.prevent="clickMeun('#area-4')">其他補充說明</a>
+                    <a href="#area-5" @click.prevent="clickMeun('#area-5')">遊戲功能</a>
+                    <a href="#area-6" @click.prevent="clickMeun('#area-6')">基本功能</a>
+                    <a href="#area-2" @click.prevent="clickMeun('#area-2')">7PK公式表</a>
+                    <a href="#area-3" @click.prevent="clickMeun('#area-3')">彩金</a>
+                    <a href="#area-4" @click.prevent="clickMeun('#area-4')">其他補充說明</a>
                 </div>
             </div>
         </div>
@@ -33,8 +33,8 @@
                 <p>7PK是以類似梭哈的玩法所發展出的撲克遊戲，遊戲使用一副撲克牌+2張「JOKER」(鬼牌)，發牌模式按照7PK公式表。玩法如下：</p>
                 <p>當玩家第 1 次下注後會先派發第 1 次牌 3 張（除第 2 張呈蓋牌狀態外，其餘 2 張可知牌面大小），由於 7PK 是完全按照一定的公式派發牌（參閱 7PK 公式表），故玩家可視已開牌（第 1 張及第 3 牌面）之內容決定是否要再追加注碼（共可追加 3 次，分別派牌 2 張、 1 張、 1 張），若不追加注碼，則會連續派發牌補足至 7 張，並自動選取其中 5 張最大的牌面組合，依獎金支付表所載分數支付獎金，並重新開立新一局遊戲。</p>
             </div>
-            <div class="area">
-                <h2 id="area-2" class="first-ttl">7PK公式表</h2>
+            <div id="area-2" class="area">
+                <h2 class="first-ttl">7PK公式表</h2>
                 <h3 class="sec-ttl">基本玩法</h3>
                 <p>7PK是以類似梭哈的玩法所發展出的撲克遊戲，遊戲使用一副撲克牌+2張「JOKER」(鬼牌)，發牌模式按照7PK公式表。玩法如下：</p>
                 <p>當玩家第 1 次下注後會先派發第 1 次牌 3 張（除第 2 張呈蓋牌狀態外，其餘 2 張可知牌面大小），由於 7PK 是完全按照一定的公式派發牌（參閱 7PK 公式表），故玩家可視已開牌（第 1 張及第 3 牌面）之內容決定是否要再追加注碼（共可追加 3 次，分別派牌 2 張、 1 張、 1 張），若不追加注碼，則會連續派發牌補足至 7 張，並自動選取其中 5 張最大的牌面組合，依獎金支付表所載分數支付獎金，並重新開立新一局遊戲。</p>
@@ -71,6 +71,70 @@
     </div>
 
     <script src="js/jquery-1.9.js"></script>
-    <script src="js/smoothScroll.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+    $(function() {
+        new Vue({
+            el: '#manBody',
+            data: {
+                nowY: window.scrollY,
+                container: '',
+                topMenu: $('.page-header-link').offset().top,
+                topMenuHeight: $('.page-header-link').height(),
+                warp: $('html, body'),
+                target: '',
+                mobTopMeunHeight: 77,
+                windowInnerWidth: window.innerWidth,
+                headerTtlHeight: $('.page-header-ttl').height(),
+            },
+            methods: {
+                handleScroll: function() {
+                    this.nowY = window.scrollY;
+                    this.topMenuHeight = $('.page-header-link').height();
+                    //need to init
+                    this.initHeader;
+
+                    if (this.nowY >= this.topMenu) {
+                        this.container = 'is-fixed';
+                    } else {
+                        this.container = '';
+                    }
+                },
+                handleResize: function() {
+                    this.windowInnerWidth = window.innerWidth;
+                    this.initHeader;
+                },
+                clickMeun: function(id) {
+                    var clickTarget = $(id).offset().top;
+
+                    if (this.nowY < this.headerTtlHeight) {
+                        //768
+                        if (this.windowInnerWidth < 768) {
+                            this.target = clickTarget - this.topMenuHeight - this.mobTopMeunHeight;
+                        } else {
+                            this.target = clickTarget - (this.topMenuHeight * 2);
+                        }
+                    } else {
+                        this.target = clickTarget - this.topMenuHeight;
+                    }
+
+                    this.warp.animate({
+                        scrollTop: this.target
+                    }, 500);
+                },
+                initHeader: function() {
+                    this.topMenuHeight = $('.page-header-link').height();
+                    this.headerTtlHeight = $('.page-header-ttl').height();
+                }
+            },
+            //init
+            created: function() {
+                //window on scroll
+                window.addEventListener('scroll', this.handleScroll);
+                window.addEventListener('resize', this.handleResize);
+            },
+        });
+    });
+    </script>
 </body>
 </html>

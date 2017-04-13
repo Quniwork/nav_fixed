@@ -12,8 +12,9 @@
 	}
 	.page-header-link {
 		@include transition(all .5s ease);
-		line-height: 60px;
 		a {
+			display: inline-block;
+			line-height: 60px;
 			color: #0885a5;
 			margin-right: 20px;
 			&:last-child {
@@ -22,8 +23,6 @@
 		}
 	}
 }
-
-
 
 // body
 #page-body {
@@ -42,25 +41,56 @@
 		}
 	}
 }
+@media screen and (max-width: 980px) {
+	#page-header {
+		.page-header-link {
+			padding: 0 1rem;
+		}
+	}
+	#page-body {
+		.area {
+			padding: 0 1rem;
+		}
+	}
+}
 
 .is-fixed {
 	#page-header {
 		.page-header-link {
+			overflow-y: hidden;
+			white-space: nowrap;
 			position: fixed;
 			top: 0;
 			left: 0;
 			right: 0;
+			z-index: 1;
 			background-color: #b22724;
 			a {
 				color: #fff;
 			}
 		}
+		@media screen and (max-width: 767px) {
+			.page-header-link {
+				overflow-scrolling: touch;
+    			-webkit-overflow-scrolling: touch;
+				&:before {
+					content: '';
+					position: fixed;
+					top: 0;
+					right: 0;
+					z-index: 2;
+					display: inline-block;
+					width: 80px;
+					height: 60px;
+					@include background-image(image-url("header-topbg.png"), linear-gradient(left, rgba(178, 39, 36, 0) 0%, #b22724 100%));
+				}
+			}
+		}
+		@media screen and (min-width: 768px) {
+			.page-header-link {
+				overflow-y: auto;
+				white-space: normal;
+			}
+		}
 	}
-	// #page-body {
-	// 	.area {
-	// 		&#area-1 {
-	// 			padding-top: 130px;
-	// 		}
-	// 	}
-	// }
 }

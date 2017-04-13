@@ -64,9 +64,10 @@ table {
   -o-transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  line-height: 60px;
 }
 #page-header .page-header-link a {
+  display: inline-block;
+  line-height: 60px;
   color: #0885a5;
   margin-right: 20px;
 }
@@ -90,15 +91,55 @@ table {
   padding: 5px 0;
 }
 
+@media screen and (max-width: 980px) {
+  #page-header .page-header-link {
+    padding: 0 1rem;
+  }
+
+  #page-body .area {
+    padding: 0 1rem;
+  }
+}
 .is-fixed #page-header .page-header-link {
+  overflow-y: hidden;
+  white-space: nowrap;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1;
   background-color: #b22724;
 }
 .is-fixed #page-header .page-header-link a {
   color: #fff;
+}
+@media screen and (max-width: 767px) {
+  .is-fixed #page-header .page-header-link {
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+  }
+  .is-fixed #page-header .page-header-link:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    display: inline-block;
+    width: 80px;
+    height: 60px;
+    background-image: url('../image/header-topbg.png'), url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2IyMjcyNCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiMjI3MjQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+    background-size: 100%;
+    background-image: url('../image/header-topbg.png'), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(178, 39, 36, 0)), color-stop(100%, #b22724));
+    background-image: url('../image/header-topbg.png'), -moz-linear-gradient(left, rgba(178, 39, 36, 0) 0%, #b22724 100%);
+    background-image: url('../image/header-topbg.png'), -webkit-linear-gradient(left, rgba(178, 39, 36, 0) 0%, #b22724 100%);
+    background-image: url('../image/header-topbg.png'), linear-gradient(to right, rgba(178, 39, 36, 0) 0%, #b22724 100%);
+  }
+}
+@media screen and (min-width: 768px) {
+  .is-fixed #page-header .page-header-link {
+    overflow-y: auto;
+    white-space: normal;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

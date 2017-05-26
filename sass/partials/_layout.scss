@@ -67,6 +67,9 @@
 			background-color: #b22724;
 			a {
 				color: #fff;
+				&:last-child {
+					margin-right: 120px;
+				}
 			}
 		}
 		@media screen and (max-width: 767px) {

@@ -113,6 +113,9 @@ table {
 .is-fixed #page-header .page-header-link a {
   color: #fff;
 }
+.is-fixed #page-header .page-header-link a:last-child {
+  margin-right: 120px;
+}
 @media screen and (max-width: 767px) {
   .is-fixed #page-header .page-header-link {
     overflow-scrolling: touch;
